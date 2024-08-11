@@ -2,41 +2,48 @@
 
 ### Connection Modes
 The following connection modes are supported:
-Embedded mode (local connections using JDBC)
-Server mode (remote connections using JDBC or ODBC over TCP/IP)
-Mixed mode (local and remote connections at the same time)
+* Embedded mode (local connections using JDBC)
+* Server mode (remote connections using JDBC or ODBC over TCP/IP)
+* Mixed mode (local and remote connections at the same time)
 
+[Connection Modes](https://www.h2database.com/html/features.html#connection_modes)
 
-### Starting the Server Tool from Command Line
-To allow remote database creation, you can use the -ifNotExists parameter:
-java -cp h2-*.jar org.h2.tools.Server -tcp -tcpAllowOthers -tcpPort 8083 -ifNotExists
+### Quick start with Server Mode
+1. Download Binary JAR https://www.h2database.com/html/download.html
+2. Start the H2 server with TCP connections enabled and the console active, but configure it to prevent database creation through TCP connections.
+```sh
+  java -cp h2-*.jar org.h2.tools.Server -tcp -tcpAllowOthers -tcpPort 8083 -web -webAllowOthers -webPort 8082
+```
+3. Create database with local
+```sh
+java -cp h2-*.jar org.h2.tools.Shell    
 
-### Creating New Databases
-java -cp h2-*.jar org.h2.tools.Shell -url jdbc:h2:tcp://192.168.1.152:8083/~/demo1;IFEXISTS=FALSE -user sa -password
+Welcome to H2 Shell 2.3.230 (2024-07-15)
+Exit with Ctrl+C
+URL       jdbc:h2:~/demo
+Driver   org.h2.Driver
+User      sa
+Password  
+```
+4. Access console : http://{IP}:8082
+5. Spring boot application configuration
+```yml
+spring.datasource.url=jdbc:h2:tcp://{IP}:8083/~/demo
+spring.datasource.driverClassName=org.h2.Driver
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.datasource.username=sa
+spring.datasource.password=
+#spring.jpa.show-sql = true
+spring.jpa.hibernate.ddl-auto = create-drop
+```
 
+[Server Modes](https://h2database.com/html/tutorial.html#using_server)
 
-
-### Start H2 with default configuration
- java -cp h2*.jar org.h2.tools.Server -ifNotExists
-
-
-java -cp h2-*.jar org.h2.tools.Server -tcp -tcpAllowOthers -tcpPort 8083 -web -webAllowOthers -webPort 8082
-
-
-
-
--tcpAllowOthers: Allows remote TCP connections.
--pgAllowOthers: Allows remote PostgreSQL-compatible connections.
--webAllowOthers: Allows remote access to the Web Console.
--ifNotExists: Used in JDBC URLs to allow database creation if it doesn’t exist (not applicable to Server tool).
-
-### Start H2 allow to connect with TCP, but not allow to TCP create database
-1.java -cp h2-*.jar org.h2.tools.Server -tcp -tcpAllowOthers -tcpPort 8083\
-2.java -cp h2-*.jar org.h2.tools.Shell -url jdbc:h2:`~`/demo3 -user sa -password\
-3.Spring configuration spring.datasource.url=jdbc:h2:tcp://192.168.1.152:8083/`~`/demo3
-
-### Start H2 allow to connect with TCP and Start console, but not allow to TCP create database
-1.java -cp h2-*.jar org.h2.tools.Server -tcp -tcpAllowOthers -tcpPort 8083 -web -webAllowOthers -webPort 8082\
-2.org.h2.tools.Shell\
-2.1.URL jdbc:h2:~/demo
-3.Access console : http://{IP}:8082
+### Additional configuration
+```sh
+java -cp h2-*.jar org.h2.tools.Server -tcp -tcpAllowOthers -tcpPort 8083 -pg -pgAllowOthers -pgPort 5435 -web -webAllowOthers -webPort 8082 -ifNotExists
+```
+* tcpAllowOthers: Allows remote TCP connections.
+* pgAllowOthers: Allows remote PostgreSQL-compatible connections.
+* webAllowOthers: Allows remote access to the Web Console.
+* ifNotExists: Used in JDBC URLs to allow database creation if it doesn’t exist (not applicable to Server tool).
