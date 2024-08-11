@@ -36,4 +36,7 @@ java -cp h2-*.jar org.h2.tools.Server -tcp -tcpAllowOthers -tcpPort 8083 -web -w
 3.Spring configuration spring.datasource.url=jdbc:h2:tcp://192.168.1.152:8083/`~`/demo3
 
 ### Start H2 allow to connect with TCP and Start console, but not allow to TCP create database
-java -cp h2-*.jar org.h2.tools.Server -tcp -tcpAllowOthers -tcpPort 8083 -web -webAllowOthers -webPort 8082
+1.java -cp h2-*.jar org.h2.tools.Server -tcp -tcpAllowOthers -tcpPort 8083 -web -webAllowOthers -webPort 8082\
+2.org.h2.tools.Shell\
+2.1.URL jdbc:h2:~/demo
+3.Access console : http://{IP}:8082
