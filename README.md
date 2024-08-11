@@ -7,12 +7,14 @@ Server mode (remote connections using JDBC or ODBC over TCP/IP)
 Mixed mode (local and remote connections at the same time)
 
 
-### Creating New Databases
- java -cp ./h2-*.jar org.h2.tools.Shell
-
- 
 ### Starting the Server Tool from Command Line
-java -cp ./h2-*.jar org.h2.tools.Server -tcp -tcpAllowOthers -tcpPort 8083
+To allow remote database creation, you can use the -ifNotExists parameter:
+java -cp h2-*.jar org.h2.tools.Server -tcp -tcpAllowOthers -tcpPort 8083 -ifNotExists
+
+### Creating New Databases
+java -cp h2-*.jar org.h2.tools.Shell -url jdbc:h2:tcp://192.168.1.152:8083/~/demo1;IFEXISTS=FALSE -user sa -password
 
 
+
+### Start H2 with default configuration
  java -cp h2*.jar org.h2.tools.Server -ifNotExists
