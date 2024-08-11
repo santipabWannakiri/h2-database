@@ -30,3 +30,9 @@ java -cp h2-*.jar org.h2.tools.Server -tcp -tcpAllowOthers -tcpPort 8083 -web -w
 -webAllowOthers: Allows remote access to the Web Console.
 -ifNotExists: Used in JDBC URLs to allow database creation if it doesn’t exist (not applicable to Server tool).
 
+### Start H2 allow to connect with TCP, but not allow to TCP create database
+1.java -cp h2-*.jar org.h2.tools.Server -tcp -tcpAllowOthers -tcpPort 8083
+2.java -cp h2-*.jar org.h2.tools.Shell -url jdbc:h2:~/demo3 -user sa -password
+3. Spring configuration spring.datasource.url=jdbc:h2:tcp://192.168.1.152:8083/~/demo3
+
+
