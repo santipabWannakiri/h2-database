@@ -13,3 +13,6 @@ Mixed mode (local and remote connections at the same time)
  
 ### Starting the Server Tool from Command Line
 java -cp ./h2-*.jar org.h2.tools.Server -tcp -tcpAllowOthers -tcpPort 8083
+
+
+ java -cp h2*.jar org.h2.tools.Server -ifNotExists
