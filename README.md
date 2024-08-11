@@ -18,3 +18,7 @@ java -cp h2-*.jar org.h2.tools.Shell -url jdbc:h2:tcp://192.168.1.152:8083/~/dem
 
 ### Start H2 with default configuration
  java -cp h2*.jar org.h2.tools.Server -ifNotExists
+
+
+java -cp h2-*.jar org.h2.tools.Server -tcp -tcpAllowOthers -tcpPort 8083 -web -webAllowOthers -webPort 8082
+
